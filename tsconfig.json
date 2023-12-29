@@ -1,0 +1,3 @@
+{
+  "extends": "./.nitrodev/types/tsconfig.json"
+}
