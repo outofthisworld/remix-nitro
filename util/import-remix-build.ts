@@ -8,7 +8,7 @@ export default async function importBuild() {
   }
   const dir = process.env.INIT_CWD ?? process.cwd();
 
-  build = await import(`${dir}/build/index.js`);
+  build = await import(`${dir}/remix/index.js`);
 
   await broadcastDevReady(build);
   return build;

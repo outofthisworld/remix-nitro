@@ -9,9 +9,9 @@ export default defineNitroConfig({
   // The default preset
   preset: "vercel",
   output: {
-    dir: `${dir}/remix-nitro`,
+    dir: `${dir}`,
     // Where the server build files are located
-    serverDir: `${dir}/remix-nitro/build`,
+    serverDir: `${dir}/build`,
     // Where the user public dir is located (we will serve this)
     publicDir: `${dir}/public`,
   },
@@ -36,7 +36,7 @@ export default defineNitroConfig({
   serverAssets: [
     {
       baseName: "remix/build",
-      dir: `${dir}/build`,
+      dir: `${dir}/remix`,
     },
     {
       baseName: "remix/public",
