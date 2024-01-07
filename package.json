@@ -16,6 +16,7 @@
   "dependencies": {
     "@remix-run/node": "^2.4.1",
     "@vercel/remix": "^2.4.1",
+    "glob": "^10.3.10",
     "nitropack": "latest"
   },
   "devDependencies": {

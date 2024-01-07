@@ -1,19 +1,19 @@
 import * as security from "./config/security";
+import { globSync } from "glob";
 
 const dir = process.env.INIT_CWD ?? process.cwd();
-console.log( `${dir}/build/index.js`)
+
 //https://nitro.unjs.io/config
 export default defineNitroConfig({
   preset: "node",
   output: {
-    dir: ".build/nitro-server-build",
-    serverDir: ".build/nitro-server-build/server",
-    publicDir:
-      "/Users/imac/Desktop/DalesProjects/Playground/remixpractice/remixproxylistfinal/public",
+    dir: `${dir}/remix-nitro`,
+    serverDir: `${dir}/remix-nitro/build`,
+    publicDir: `${dir}/public`,
   },
   serveStatic: true,
   noPublicDir: true,
-  buildDir: ".nitrodev",
+  buildDir: `${dir}/.nitrodev`,
   renderer: "./routes/index.ts",
   runtimeConfig: {},
   appConfig: {
@@ -25,10 +25,37 @@ export default defineNitroConfig({
   compressPublicAssets: { gzip: true, brotli: true },
   serverAssets: [
     {
-      baseName: "remixbuild",
+      baseName: "remix/build",
       dir: `${dir}/build`,
     },
+    {
+      baseName: "remix/public",
+      dir: `${dir}/public`,
+    },
   ],
+  plugins: globSync([`${dir}/plugins/**/*.ts`]),
+  handlers: [
+    ...globSync([`${dir}/routes/**/*.{ts,js}`]).map((path) => {
+      return {
+        route: path.replace(`${dir}/routes`, "").replace(/\.ts|.js/g, ""),
+        handler: path,
+        middleware: false,
+        lazy: false,
+      };
+    }),
+    ...globSync([`${dir}/api/**/*.{ts,js}`]).map((path) => ({
+      route: path.replace(`${dir}`, "").replace(/\.ts|.js/g, ""),
+      handler: path,
+      middleware: false,
+      lazy: false,
+    })),
+    ...globSync([`${dir}/middleware/**/*.{ts,js}`]).map((path) => ({
+      handler: path,
+      middleware: true,
+      lazy: false,
+    })),
+  ],
+  scanDirs: [`${dir}/routes`, `${dir}/plugins`],
   typescript: {
     tsConfig: {
       compilerOptions: {

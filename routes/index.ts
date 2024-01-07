@@ -6,8 +6,5 @@ import importBuild from "../util/import-remix-build";
  * Serve remix.
  */
 export default eventHandler(async (event) => {
-  return createRequestHandler(await importBuild())(
-    toWebRequest(event),
-    event.context
-  );
+  return createRequestHandler(await importBuild())(toWebRequest(event), event.context);
 });
