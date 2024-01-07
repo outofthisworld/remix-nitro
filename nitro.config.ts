@@ -1,28 +1,38 @@
 import * as security from "./config/security";
 import { globSync } from "glob";
 
+// The root dir for the users project 
 const dir = process.env.INIT_CWD ?? process.cwd();
 
 //https://nitro.unjs.io/config
 export default defineNitroConfig({
+  // The default preset
   preset: "node",
   output: {
     dir: `${dir}/remix-nitro`,
+    // Where the server build files are located
     serverDir: `${dir}/remix-nitro/build`,
+    // Where the user public dir is located (we will serve this)
     publicDir: `${dir}/public`,
   },
+  // Server the users public dir
   serveStatic: true,
+  // Dont create our own public dir
   noPublicDir: true,
+  // Place the local dev build in the users base dir
   buildDir: `${dir}/.nitrodev`,
   renderer: "./routes/index.ts",
   runtimeConfig: {},
+  // This will be user defined configuration, that gets merged in
   appConfig: {
     security,
   },
+  // This will be user defined route rules, that gets merged in
   routeRules: {
     "/": {},
   },
   compressPublicAssets: { gzip: true, brotli: true },
+  // Where user defined build and public assets are located (obtain from their remix config)
   serverAssets: [
     {
       baseName: "remix/build",
@@ -33,29 +43,30 @@ export default defineNitroConfig({
       dir: `${dir}/public`,
     },
   ],
-  plugins: globSync([`${dir}/plugins/**/*.ts`]),
+  plugins: globSync([`${dir}/plugins/**/*.{ts,js}`]),
   handlers: [
-    ...globSync([`${dir}/routes/**/*.{ts,js}`]).map((path) => {
-      return {
-        route: path.replace(`${dir}/routes`, "").replace(/\.ts|.js/g, ""),
-        handler: path,
-        middleware: false,
-        lazy: false,
-      };
-    }),
+    // Set up user defined routes
+    ...globSync([`${dir}/routes/**/*.{ts,js}`]).map((path) => ({
+      route: path.replace(`${dir}/routes`, "").replace(/\.ts|.js/g, ""),
+      handler: path,
+      middleware: false,
+      lazy: false,
+    })),
+    // Set up user defined api routes
     ...globSync([`${dir}/api/**/*.{ts,js}`]).map((path) => ({
       route: path.replace(`${dir}`, "").replace(/\.ts|.js/g, ""),
       handler: path,
       middleware: false,
       lazy: false,
     })),
+    // Set up user dedfined middleware
     ...globSync([`${dir}/middleware/**/*.{ts,js}`]).map((path) => ({
       handler: path,
       middleware: true,
       lazy: false,
     })),
   ],
-  scanDirs: [`${dir}/routes`, `${dir}/plugins`],
+  // Typescript settings
   typescript: {
     tsConfig: {
       compilerOptions: {
