@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-const fs = require('node:fs');
-const dir = process.env.INIT_CWD ?? process.cwd();
-fs.copyFileSync(`${dir}/nitro.config.ts`, `nitro.config.ts`);
 const result = require("node:child_process").spawnSync("pnpm", ["--prefix", __dirname, process.argv[2]], { stdio: "inherit" });
 
 if (result.error) {
