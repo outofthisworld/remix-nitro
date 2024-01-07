@@ -22,5 +22,5 @@
   "devDependencies": {
     "chokidar": "^3.5.3"
   },
-  "version": "0.0.5"
+  "version": "0.0.6"
 }

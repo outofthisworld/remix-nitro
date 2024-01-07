@@ -1,7 +1,7 @@
-// The root dir for the users project 
+// The root dir for the users project
 const dir = process.env.INIT_CWD ?? process.cwd();
 
-const config = await import(`${dir}/nitro.config.ts`);
-
 //https://nitro.unjs.io/config
-export default config;
+export default defineNitroConfig({
+  appConfigFiles: [`${dir}/nitro.config.ts`],
+});
