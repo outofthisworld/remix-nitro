@@ -7,7 +7,7 @@ const dir = process.env.INIT_CWD ?? process.cwd();
 //https://nitro.unjs.io/config
 export default defineNitroConfig({
   // The default preset
-  preset: "node",
+  preset: "vercel",
   output: {
     dir: `${dir}/remix-nitro`,
     // Where the server build files are located

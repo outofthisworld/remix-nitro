@@ -1,10 +1,10 @@
 {
-  "private": true,
+  "private": false,
   "name": "remix-nitro",
   "type": "module",
   "main": "cli.cjs",
   "bin": {
-    "remix-nitro": "./cli.cjs"
+    "remix-nitro": "cli.cjs"
   },
   "scripts": {
     "prepare": "nitropack prepare",
@@ -21,5 +21,6 @@
   },
   "devDependencies": {
     "chokidar": "^3.5.3"
-  }
+  },
+  "version": "0.0.0"
 }
