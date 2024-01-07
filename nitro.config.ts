@@ -9,9 +9,9 @@ export default defineNitroConfig({
   // The default preset
   preset: "vercel",
   output: {
-    dir: `${dir}/build`,
+    dir: `build`,
     // Where the server build files are located
-    serverDir: `${dir}/build`,
+    serverDir: `build`,
     // Where the user public dir is located (we will serve this)
     publicDir: `${dir}/public`,
   },

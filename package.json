@@ -11,7 +11,7 @@
     "dev": "nitropack dev",
     "build": "nitropack build",
     "preview": "pnpm start",
-    "start": "node .build/nitro-server-build/server/index.mjs"
+    "start": "node build/index.mjs"
   },
   "dependencies": {
     "@remix-run/node": "^2.4.1",
